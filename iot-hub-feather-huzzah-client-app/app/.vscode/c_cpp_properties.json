@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\aaron\\OneDrive\\Documents\\Arduino\\libraries\\AzureIoTHubMQTTClient\\src",
+                "C:\\Users\\aaron\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\aaron\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.4.2\\**",
+                "c:\\Users\\aaron\\OneDrive\\Documents\\Arduino\\libraries\\AzureIoTHub\\src\\**",
+                "c:\\Users\\aaron\\OneDrive\\Documents\\Arduino\\libraries\\AzureIoTUtility\\src\\**",
+                "c:\\Users\\aaron\\OneDrive\\Documents\\Arduino\\libraries\\AzureIoTProtocol_MQTT\\src\\**",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.17763.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            "forcedInclude": []
+        },
+        {
+            "name": "Arduino",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.17763.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
