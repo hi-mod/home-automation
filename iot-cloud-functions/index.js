@@ -13,15 +13,13 @@ exports.relayCloudIot = (event, callback) => {
       : '{}');
   console.log(record);
 
-  let messagesSent = record.hops;
-  messagesSent = messagesSent + 1;
-  console.log(`${record.deviceId} ${record.registryId} ${messagesSent}`);
+  console.log(`${record.timestamp} ${record.deviceId} ${record.registryId}`);
 
   const config = {
-    cloudRegion: record.cloudRegion,
     deviceId: record.deviceId,
-    registryId: record.registryId,
-    hops: messagesSent
+    pump: record.pump,
+    timestamp: record.timestamp,
+    millis: record.millis
   };
 
   google.auth.getClient().then(client => {
@@ -30,7 +28,7 @@ exports.relayCloudIot = (event, callback) => {
     });
     console.log('START setDeviceConfig');
     const parentName = `projects/${projectId}/locations/${cloudRegion}`;
-    const registryName = `${parentName}/registries/${config.registryId}`;
+    const registryName = `${parentName}/registries/${record.registryId}`;
     const binaryData = Buffer.from(JSON.stringify(config)).toString('base64');
     const request = {
       name: `${registryName}/devices/${config.deviceId}`,
