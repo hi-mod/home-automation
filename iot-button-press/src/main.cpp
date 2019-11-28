@@ -4,9 +4,12 @@
 #include <ArduinoJson.h>
 
 const int button_pin = 0;
+const int button_led_pin = 16;
 const int relay_pin = 5;
-const int pump_duration = 75;
-const int ignore_pump_on_duration = 75;
+const int pump_duration = 120;
+const int ignore_pump_on_duration = 120;
+const String pump_device = "water-pump-device";
+const String water_temp_device = "water-temp-device";
 
 bool pumpOn = false;
 ulong pumpStartTime;
@@ -34,11 +37,15 @@ void messageReceived(String &topic, String &payload)
     pumpStartTime = rawtime;
     Serial.println("Turn the pump on...");
     digitalWrite(relay_pin, LOW);
+    digitalWrite(button_led_pin, HIGH);
   }
 }
 
 void setup() {
   pinMode(button_pin, INPUT_PULLUP);
+
+  digitalWrite(button_led_pin, LOW);
+  pinMode(button_led_pin, OUTPUT);
 
   digitalWrite(relay_pin, HIGH);
   pinMode(relay_pin, OUTPUT);
@@ -72,7 +79,11 @@ void loop() {
     timeinfo = localtime (&rawtime);
     strftime(buffer,80,"%Y-%m-%d %H:%M:%S",timeinfo);
 
-    String messagePayload = "{\"deviceId\":\"" + String(device_id) + "\",\"timestamp\":\"" + String(buffer) + "\",\"millis\":" 
+    String messagePayload = "{\"deviceId\":\"" + pump_device + "\",\"timestamp\":\"" + String(buffer) + "\",\"millis\":" 
+      + rawtime + ",\"pump\":\"on\",\"registryId\":\"" + String(registry_id) + "\",\"cloudRegion\":\"" + String(location) + "\"}";
+    Serial.println(messagePayload);
+    publishTelemetry(messagePayload);
+    messagePayload = "{\"deviceId\":\"" + water_temp_device + "\",\"timestamp\":\"" + String(buffer) + "\",\"millis\":" 
       + rawtime + ",\"pump\":\"on\",\"registryId\":\"" + String(registry_id) + "\",\"cloudRegion\":\"" + String(location) + "\"}";
     Serial.println(messagePayload);
     publishTelemetry(messagePayload);
@@ -85,6 +96,7 @@ void loop() {
       Serial.println("\nTurn the pump off...");
       pumpOn = false;
       digitalWrite(relay_pin, HIGH);
+      digitalWrite(button_led_pin, LOW);
     }
   }
 }
