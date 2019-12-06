@@ -2,10 +2,10 @@
 'use strict';
 const {google} = require('googleapis');
 
-const projectId = '****';
+const projectId = 'home-automation-hi-mod';
 const cloudRegion = 'us-central1';
 
-exports.relayCloudIot = (event, callback) => {
+exports.relayCloudIot = function (event, callback) {
   console.log(event.data);
   const record = JSON.parse(
     event.data
@@ -18,7 +18,6 @@ exports.relayCloudIot = (event, callback) => {
   const config = {
     deviceId: record.deviceId,
     pump: record.pump,
-    timestamp: record.timestamp,
     millis: record.millis
   };
 
