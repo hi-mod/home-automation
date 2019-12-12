@@ -6,7 +6,8 @@ const projectId = 'home-automation-hi-mod';
 const cloudRegion = 'us-central1';
 
 exports.relayCloudIot = function (event, callback) {
-  console.log(event.data);
+  console.log(`Event: ${event}`);
+  console.log(`Event.data: ${event.data}`);
   const record = JSON.parse(
     event.data
       ? Buffer.from(event.data, 'base64').toString()
