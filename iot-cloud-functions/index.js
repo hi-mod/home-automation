@@ -6,13 +6,19 @@ const projectId = 'home-automation-hi-mod';
 const cloudRegion = 'us-central1';
 
 exports.relayCloudIot = function (event, callback) {
-  console.log(`Event: ${event}`);
+  console.log(`Event: ${JSON.stringify(event)}`);
   console.log(`Event.data: ${event.data}`);
-  const record = JSON.parse(
-    event.data
-      ? Buffer.from(event.data, 'base64').toString()
-      : '{}');
-  console.log(record);
+  try {
+    const record = JSON.parse(
+      event.data
+        ? Buffer.from(event.data, 'base64').toString()
+        : '{}');
+    console.log(record);
+  } catch (error) {
+    console.log("Could not convert event.data to JSON.");
+    console.log(error);
+    return;
+  }
 
   console.log(`${record.timestamp} ${record.deviceId} ${record.registryId}`);
 
@@ -36,7 +42,9 @@ exports.relayCloudIot = function (event, callback) {
       binaryData: binaryData
     };
     console.log('Set device config.');
-    return google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
+    const deviceConfig = google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
+    console.log(JSON.stringify(deviceConfig);
+    return deviceConfig;
   }).then(result => {
     console.log(result);
     console.log(result.data);
