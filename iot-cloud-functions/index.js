@@ -43,7 +43,7 @@ exports.relayCloudIot = function (event, callback) {
     };
     console.log('Set device config.');
     const deviceConfig = google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
-    console.log(JSON.stringify(deviceConfig);
+    console.log(JSON.stringify(deviceConfig));
     return deviceConfig;
   }).then(result => {
     console.log(result);
