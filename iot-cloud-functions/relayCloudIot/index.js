@@ -8,8 +8,9 @@ const cloudRegion = '****';
 exports.relayCloudIot = (event, callback) => {
   console.log(`Event: ${JSON.stringify(event)}`);
   console.log(`Event.data: ${event.data}`);
+  let record;
   try {
-    const record = JSON.parse(
+    record = JSON.parse(
       event.data
         ? Buffer.from(event.data, 'base64').toString()
         : '{}');
