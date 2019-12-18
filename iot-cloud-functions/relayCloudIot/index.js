@@ -3,7 +3,7 @@
 const {google} = require('googleapis');
 
 const projectId = '****';
-const cloudRegion = 'us-central1';
+const cloudRegion = '****';
 
 exports.relayCloudIot = (event, callback) => {
   console.log(event.data);
