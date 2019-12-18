@@ -6,19 +6,25 @@ const projectId = '****';
 const cloudRegion = '****';
 
 exports.relayCloudIot = (event, callback) => {
-  console.log(event.data);
-  const record = JSON.parse(
-    event.data
-      ? Buffer.from(event.data, 'base64').toString()
-      : '{}');
-  console.log(record);
+  console.log(`Event: ${JSON.stringify(event)}`);
+  console.log(`Event.data: ${event.data}`);
+  try {
+    const record = JSON.parse(
+      event.data
+        ? Buffer.from(event.data, 'base64').toString()
+        : '{}');
+    console.log(record);
+  } catch (error) {
+    console.log("Could not convert event.data to JSON.");
+    console.log(error);
+    return;
+  }
 
   console.log(`${record.timestamp} ${record.deviceId} ${record.registryId}`);
 
   const config = {
     deviceId: record.deviceId,
     pump: record.pump,
-    timestamp: record.timestamp,
     millis: record.millis
   };
 
@@ -36,7 +42,9 @@ exports.relayCloudIot = (event, callback) => {
       binaryData: binaryData
     };
     console.log('Set device config.');
-    return google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
+    const deviceConfig = google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
+    console.log(JSON.stringify(deviceConfig));
+    return deviceConfig;
   }).then(result => {
     console.log(result);
     console.log(result.data);
