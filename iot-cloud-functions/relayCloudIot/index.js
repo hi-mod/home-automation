@@ -1,4 +1,3 @@
-// [START iot_relay_message_js]
 'use strict';
 const {google} = require('googleapis');
 
@@ -6,8 +5,6 @@ const projectId = '****';
 const cloudRegion = '****';
 
 exports.relayCloudIot = (event, callback) => {
-  console.log(`Event: ${JSON.stringify(event)}`);
-  console.log(`Event.data: ${event.data}`);
   let record;
   try {
     record = JSON.parse(
@@ -43,12 +40,8 @@ exports.relayCloudIot = (event, callback) => {
       binaryData: binaryData
     };
     console.log('Set device config.');
-    const deviceConfig = google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
-    console.log(JSON.stringify(deviceConfig));
-    return deviceConfig;
+    return google.cloudiot('v1').projects.locations.registries.devices.modifyCloudToDeviceConfig(request);
   }).then(result => {
     console.log(result);
-    console.log(result.data);
   });
 };
-// [END iot_relay_message_js]
