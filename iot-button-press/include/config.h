@@ -23,9 +23,9 @@ const char* ntp_secondary = "time.nist.gov";
 // it's smaller add "00:" to the start. If it's too big or too small something
 // is probably wrong with your key.
 const char* private_key_str =
-    "***"
-    "***"
-    "***";
+    "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00"
+    "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00"
+    "00:00";
 
 // Time (seconds) to expire token += 20 minutes for drift
 const int jwt_exp_secs = 3600; // Maximum 24H (3600*24)
