@@ -1,12 +1,8 @@
 // This file contains your configuration used to connect to Cloud IoT Core
 
 // WIFI
-const char* ssid = "FBI Van";
+const char* ssid = "****";
 const char* password = "****";
-// const char* ssid = "Pixel_3077";
-// const char* password = "****";
-// const char* ssid = "CSGPUBLIC";
-// const char* password = "****";
 
 // Cloud iot details.
 const char* project_id = "****";
