@@ -47,14 +47,17 @@ The yellow wire is connected to a GPIO pin on the board, the red is connected 3v
 
 Again referring to the diagram below, we place a momentary button on the breadboard connecting one side to the ground and the other to a GPIO pin on the board.
 
-![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/Home%20Automation%20Blog%20Post.png)
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%201.png)
 
 Open Visual Studio Code, by default, if you’ve installed the PlatformIO extension the PIO Home tab will open choose New Project and give it a name, board type, framework and then choose finish. See _figure 2_.
 
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%202.png)
+
 You will have your project created for you and our code will go into main.cpp under the src folder. _See figure 3._
 
-Your main.cpp file should look like this:
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%203.png)
 
+Your main.cpp file should look like this:
 
 ```
 #include <Arduino.h>
@@ -68,9 +71,7 @@ void loop() {
 }
 ```
 
-
 Let's make our button actuate the relay:
-
 
 ```
 #include <Arduino.h>
@@ -102,11 +103,9 @@ void loop() {
 }
 ```
 
-
 In the code block above we declare constants for pins we are going to use for the button, LED and relay. You’ll notice in the setup method I am writing to the relay_pin setting it HIGH before calling pinMode to setup it up for OUTPUT. I was having an issue where without this call the relay would actuate the water pump whenever the device was starting up and it would stay on. Obviously not the desired effect.
 
 In the root of your project, you will find a file called platformio.ini.
-
 
 ```
 ;PlatformIO Project Configuration File
@@ -125,9 +124,7 @@ board = esp12e
 framework = arduino
 ```
 
-
 Add the following lines directly after framework = arduino:
-
 
 ```
 monitor_speed = 115200
@@ -140,7 +137,6 @@ lib_deps =
 
 
 These lines will make, in order, the serial monitor automatically start at baud rate 115,200, the upload speed of our code to the device at a baud rate of 512,000 and, finally, add the needed libraries for working with Google Cloud IoT.
-
 
 
 *   [Google Cloud IoT Core JWT](https://platformio.org/lib/show/5372/Google%20Cloud%20IoT%20Core%20JWT) for connecting to Google’s IoT Core
