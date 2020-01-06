@@ -1,15 +1,12 @@
 # How I Saved Money On My Water Bill
 
-
 # My Home Automation Journey
 
 This is the story of my journey of creating a home automation system. Starting with my hot water. Later I detail how I built my solution.
 
-
 # Hot Water Heater Dies
 
 Not long ago my water tank heater started leaking, and after I got over the initial dread of dealing with that, I thought this was the perfect time to tackle a problem that has always bothered me. The shower in my master bathroom is the furthest fixture from my water heater and, as such, takes 2-3 minutes of running the hot water before it begins to get warm. This has always irritated me as I thought it was a huge waste of water when you consider the showerhead is rated at 2.5 gallons per minute. That equates to 5 to 7 gallons per day, or 1,825 to 2,555 gallons per year for just one person! This seemed wasteful to me and it only got worse when I installed my new tankless water heater. Because the footprint of the tankless water heater was smaller and could be mounted on the wall I wanted to reclaim the floor space my tank-type water was taking in the basement. Therefore I mounted it in a corner of the basement where I could easily vent it and allow the condensation from the combustion to drain into my sump pump pit. The problem was that this added about 10 or 12 more feet of ¾” pipe from the hot water heater and all the fixtures in the house. Further increasing the time and amount of water wasted before getting hot water.
-
 
 # The Solution
 
@@ -17,32 +14,23 @@ I decided, along with the hot water heater, I would install a water pump near th
 
 I happened to already have 3 esp8266 Arduinos (I’ve always thought that the Arduinos are cool but I’ve never really had a good reason to do anything productive with them until now), switches and breadboard already on hand. I wanted to keep the cost as low as possible and use what I already had on hand; since there are already solutions that exist that can do all or most of what I want.
 
-
 # Cloud IoT Solution
 
 Originally I wanted to do the project in Azure, but Azure IoT Hub doesn’t support sending messages to a device via the MQTT protocol, I could not find libraries for the AMPQ protocol for the Arduino platform and after doing some research it seemed the standard protocol for home automation devices was MQTT. At this point, I looked at Google Cloud and found I was able to send as well as receive MQTT messages. I had been wanting to take a look at Google Cloud for a while and this was the perfect excuse to do so.
-
 
 # Reader Expectations
 
 I am assuming you are familiar with Arduino development and tinkering. I will only be explaining key differences between PlatformIO and the Arduino development environment. If you are new to Arduino projects and development I recommend you start [here](https://www.arduino.cc/en/Guide/HomePage) first.
 
-
 # Setting Up the Development Environment
-
-
 
 1. Download and install the [Arduino development environment](https://www.arduino.cc/en/Main/Software) (We won’t actually do any development in it, but it is required by PlatformIO.)
 2. Download and install [Visual Studio Code](https://code.visualstudio.com/).
 3. Once Visual Studio Code is installed open it and perform any updates it wants to do and then install the PlatformIO extension. We will be doing all of our development in Visual Studio Code with the help of this extension. We will have a much richer experience here as we will get things like code completion and be able to see the overloads of methods we are calling.
 
-
 # Developing The Code
 
-
 ## What Do We Need To Build This Solution
-
-
 
 1. We will need 2 [ESP8266 modules](https://www.amazon.com/HiLetgo-Internet-Development-Wireless-Micropython/dp/B081CSJV2V). (We can prototype with one module initially.)
 2. A breadboard for prototyping.
@@ -50,7 +38,6 @@ I am assuming you are familiar with Arduino development and tinkering. I will on
 4. A momentary switch with a built-in LED that can be controlled separately from the button.
 5. A resistor.
 6. A relay module.
-
 
 ## Start Building
 
@@ -60,12 +47,7 @@ The yellow wire is connected to a GPIO pin on the board, the red is connected 3v
 
 Again referring to the diagram below, we place a momentary button on the breadboard connecting one side to the ground and the other to a GPIO pin on the board.
 
-
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline drawings not supported directly from Docs. You may want to copy the inline drawing to a standalone drawing and export by reference. See <a href="https://github.com/evbacher/gd2md-html/wiki/Google-Drawings-by-reference">Google Drawings by reference</a> for details. The img URL below is a placeholder. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![drawing](https://docs.google.com/a/google.com/drawings/d/12345/export/png)
+![drawing](https://github.com/hi-mod/home-automation/blob/master/Home%20Automation%20Blog%20Post.png)
 
 Open Visual Studio Code, by default, if you’ve installed the PlatformIO extension the PIO Home tab will open choose New Project and give it a name, board type, framework and then choose finish. See _figure 2_.
 
