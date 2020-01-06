@@ -47,14 +47,17 @@ The yellow wire is connected to a GPIO pin on the board, the red is connected 3v
 
 Again referring to the diagram below, we place a momentary button on the breadboard connecting one side to the ground and the other to a GPIO pin on the board.
 
-![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/Home%20Automation%20Blog%20Post.png)
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%201.png)
 
 Open Visual Studio Code, by default, if you’ve installed the PlatformIO extension the PIO Home tab will open choose New Project and give it a name, board type, framework and then choose finish. See _figure 2_.
 
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%202.png)
+
 You will have your project created for you and our code will go into main.cpp under the src folder. _See figure 3._
 
-Your main.cpp file should look like this:
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/figure%203.png)
 
+Your main.cpp file should look like this:
 
 ```
 #include <Arduino.h>
@@ -68,9 +71,7 @@ void loop() {
 }
 ```
 
-
 Let's make our button actuate the relay:
-
 
 ```
 #include <Arduino.h>
@@ -102,11 +103,9 @@ void loop() {
 }
 ```
 
-
 In the code block above we declare constants for pins we are going to use for the button, LED and relay. You’ll notice in the setup method I am writing to the relay_pin setting it HIGH before calling pinMode to setup it up for OUTPUT. I was having an issue where without this call the relay would actuate the water pump whenever the device was starting up and it would stay on. Obviously not the desired effect.
 
 In the root of your project, you will find a file called platformio.ini.
-
 
 ```
 ;PlatformIO Project Configuration File
@@ -125,9 +124,7 @@ board = esp12e
 framework = arduino
 ```
 
-
 Add the following lines directly after framework = arduino:
-
 
 ```
 monitor_speed = 115200
@@ -138,59 +135,35 @@ lib_deps =
   ArduinoJson
 ```
 
-
 These lines will make, in order, the serial monitor automatically start at baud rate 115,200, the upload speed of our code to the device at a baud rate of 512,000 and, finally, add the needed libraries for working with Google Cloud IoT.
-
-
 
 *   [Google Cloud IoT Core JWT](https://platformio.org/lib/show/5372/Google%20Cloud%20IoT%20Core%20JWT) for connecting to Google’s IoT Core
 *   [MQTT](https://platformio.org/lib/show/617/mqtt) the MQTT library that Google Cloud IoT Core JWT leverages
 *   [ArduinoJson](https://platformio.org/lib/show/64/ArduinoJson) a library making it easier to serialize and deserialize JSON.
 
-Deploy the code to your board by clicking the 
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Home-Automation0.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Home-Automation0.png "image_tooltip")
- in the status bar of Visual Studio Code. 
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/Home-Automation1.png). Store image on your image server and adjust path/filename if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/Home-Automation1.png "image_tooltip")
-
+Deploy the code to your board by clicking the ![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/VS%20Code%20Arrow.png) in the status bar of Visual Studio Code. 
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/VS%20Code%20Toolbar.png)
 
 OK. So now if we deploy this code to the board we will have a system that turns on the device connected to the relay when we press the button. As soon as we release the button it will turn off the connected device.
 
 You might be saying so where is the cloud piece? This isn’t doing what you advertised. To which I say patience my young padawan. I believe in an iterative approach to development. If we just jump in and try to write the whole thing at once it can be difficult to troubleshoot what is wrong if there are problems, and trust me there will be problems! If you are growing impatient and just want the end result feel free to jump to the end of this blog post.
 
-
 ## Adding A Bit of Cloud
 
-
 ### Creating the Google Cloud IoT Core
-
-
 
 1. In the Cloud Console, on the [project selector page](https://console.cloud.google.com/projectselector2/home/dashboard), select or create a Google Cloud project. \
 Note: If you don't plan to keep the resources that you create in this procedure, create a project instead of selecting an existing project. After you finish these steps, you can delete the project, removing all resources associated with the project.
 2. Make sure that billing is enabled for your Google Cloud project. [Learn how to confirm billing is enabled for your project](https://cloud.google.com/billing/docs/how-to/modify-project).
 3. Enable the [Cloud IoT Core and Cloud Pub/Sub APIs](https://console.cloud.google.com/projectselector2/home/dashboard).
 
-
 ## Set up your local environment and install prerequisites
-
-
 
 1. [Install and initialize the Cloud SDK](https://cloud.google.com/sdk/docs/). Cloud IoT Core requires version 173.0.0 or higher of the SDK.
 2. Set up a [Node.js development environment](https://cloud.google.com/nodejs/docs/setup). \
 Alternatively, you can use [Google Cloud Shell](https://cloud.google.com/shell/docs/starting-cloud-shell), which comes with Cloud SDK and Node.js already installed.
 
-
 ## Create a device registry
-
-
 
 1. Go to the [Google Cloud IoT Core](https://console.cloud.google.com/iot) page in Cloud Console.
 2. Click **Create registry.**
@@ -205,13 +178,11 @@ Alternatively, you can use [Google Cloud Shell](https://cloud.google.com/shell/d
 
 You've just created a device registry with a Cloud Pub/Sub topic for publishing device telemetry events.
 
-
 ## Upload the Cloud Function
 
 We need a cloud function that will take messages published by one of the esp8266 boards and relay it to the other esp8266 board. Here is the function:
 
 index.js
-
 
 ```
 'use strict';
@@ -263,9 +234,7 @@ exports.relayCloudIot = (event, callback) => {
 };
 ```
 
-
 package.json
-
 
 ```
 {
@@ -282,9 +251,7 @@ package.json
 }
 ```
 
-
 Let’s go ahead and deploy that function, the command below will deploy everything in your folder to a staging storage bucket and then to your Cloud Function:
-
 
 ```
 gcloud functions deploy relayCloudIot \
@@ -294,20 +261,16 @@ gcloud functions deploy relayCloudIot \
     --project=[PROJECT_ID]
 ```
 
-
 Now we need to add a couple devices:
 
 The following command will generate an RSA-256 keypair, run it twice to generate 2 keypairs; changing the name of the file it outputs for the second run:
-
 
 ```
 openssl req -x509 -newkey rsa:2048 -days 3650 -keyout rsa_private.pem -nodes -out \
     rsa_cert.pem -subj "/CN=unused"
 ```
 
-
 After you have generated the keypairs, use the public keys to register your devices, again running this command twice; changing the name of your device and using the other public key:
-
 
 ```
 gcloud iot devices create \
@@ -316,25 +279,18 @@ gcloud iot devices create \
     --public-key path=rsa_cert.pem,type=rs256 [YOUR_DEVICE_ID]
 ```
 
-
-
 ## Let’s Get Those Devices Connected
 
 In order for the esp8266 to connect to the IoT Hub Core we will have to upload some certificates to the firmware. Here are the steps:
-
-
 
 1. Create data folder (it should be on the same level as src folder) and put [these](https://github.com/GoogleCloudPlatform/google-cloud-iot-arduino/tree/master/examples/Esp8266-lwmqtt/data) files here.
 2. Run “Upload File System image” task in [PlatformIO IDE](http://docs.platformio.org/en/latest/ide/pioide.html#pioide) or use [PlatformIO Core (CLI)](http://docs.platformio.org/en/latest/core.html#piocore) and [platformio run --target](http://docs.platformio.org/en/latest/userguide/cmd_run.html#cmdoption-platformio-run-t) command with uploadfs target.
 
 The [iot-button-press folder](https://github.com/hi-mod/home-automation/tree/master/iot-cloud-functions/relayCloudIot) of the tutorial contains the code that you will deploy to both esp8266 devices. I designed it in such a way that I could deploy the same code base to both devices. I will give a brief overview of each file and changes you will need to make in order to get it to work for you.
 
-
 #### config.h
 
 This file contains global constants for the program, several that you will need to change:
-
-
 
 *   ssid
 *   password
@@ -344,23 +300,17 @@ This file contains global constants for the program, several that you will need 
 *   device_id: this needs to be the name of the device in IoT Hub Core that the esp8266 will connect to, this and private_key_str are the only sections of code that will need to be modified between deployments of each esp8266.
 *   private_key_str: this is the private key for the device we registered on IoT Hub Core. Run `openssl ec -in <private-key.pem> -noout -text `and copy the priv: part.
 
-
 #### esp8266_mqtt.h
 
 You won’t need to change anything here, but I thought I would give an overview of what is happening here:
-
-
 
 *   getJwt(): makes a call to Google Cloud library to request a JWT token.
 *   setupCert(): loads the certificates we uploaded to each esp8266 for authenticating to IoT Hub Core.
 *   setupCloudIoT(): sets up the WiFi, registers the esp8266 with the device on IoT Hub Core, sets up the certificates and configures the MQTT client for communication.
 
-
 #### main.cpp
 
 Here you will need to make a couple modifications:
-
-
 
 *   Constants
     *   button_pin is a constant to the GPIO the button is connected to.
