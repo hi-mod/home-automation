@@ -47,7 +47,7 @@ The yellow wire is connected to a GPIO pin on the board, the red is connected 3v
 
 Again referring to the diagram below, we place a momentary button on the breadboard connecting one side to the ground and the other to a GPIO pin on the board.
 
-![drawing](https://github.com/hi-mod/home-automation/blob/master/Home%20Automation%20Blog%20Post.png)
+![drawing](https://github.com/hi-mod/home-automation/blob/master/blog%20images/Home%20Automation%20Blog%20Post.png)
 
 Open Visual Studio Code, by default, if you’ve installed the PlatformIO extension the PIO Home tab will open choose New Project and give it a name, board type, framework and then choose finish. See _figure 2_.
 
