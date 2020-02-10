@@ -1,0 +1,28 @@
+swagger: '2.0'
+info:
+  title: "Home Automation Endpoints Service"
+  version: 1.0.0
+host: [HOST NAME]
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  "/actuateWaterPump":
+    get:
+      summary: Turn on or off the hot water pump
+      operationId: "actuateWaterPump"
+      x-google-backend:
+        address: "[Cloud Function endpoint]"
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+      security:
+      - api_key: []
+securityDefinitions:
+    api_key:
+        type: "apiKey"
+        name: "key"
+        in: "query"
